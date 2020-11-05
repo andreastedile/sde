@@ -1,6 +1,6 @@
 from socket import gethostname
 from flask import Flask, request, make_response, jsonify, render_template
-from requests import post, RequestException
+from requests import post,delete, RequestException
 
 DB_API = 'http://172.16.238.10:5000/votes'
 
@@ -42,5 +42,17 @@ def votes():
         json = jsonify({'header': {'status_code': 500, 'status': 'POST to DB_API exception'}})
         our_resp = make_response(json, 200)
 
+    our_resp.mimetype = 'application/json'
+    return our_resp
+
+@app.route('/votes', methods=['DELETE'])
+def delete_vote():
+    body = request.json
+    try:
+        their_resp = delete(DB_API, json=body)
+        our_resp = make_response(their_resp.text, their_resp.status_code)
+    except RequestException:
+        json = jsonify({'header': {'status_code': 500, 'status': 'DELETE to DB_API exception'}})
+        our_resp = make_response(json, 200)
     our_resp.mimetype = 'application/json'
     return our_resp
