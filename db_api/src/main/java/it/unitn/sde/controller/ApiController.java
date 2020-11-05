@@ -6,17 +6,45 @@ import it.unitn.sde.service.ApiService;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 @RestController
 public class ApiController {
     @Autowired
+    Environment environment;
+
+    @Autowired
     private ApiService resultService;
+
+    @GetMapping(value = "/info", produces = "application/json")
+    public ResponseEntity<?> getInfo() {
+        JSONObject response = new JSONObject();
+
+        String port = environment.getProperty("server.port");
+        response.put("server port", port);
+
+        try {
+            String hostname = InetAddress.getLocalHost().getHostName();
+            response.put("server hostname", hostname);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+        String remoteAddress = InetAddress.getLoopbackAddress().getHostAddress();
+        response.put("remote address", remoteAddress);
+
+        return ResponseEntity
+                .ok()
+                .body(response.toString());
+    }
 
 
     @PostMapping(value = "/votes", produces = "application/json")
