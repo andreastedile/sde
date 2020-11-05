@@ -1,0 +1,65 @@
+version: '3.8'
+
+x-environment:
+  &environment
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: password
+  POSTGRES_DB: dbvotes
+
+services:
+
+  db_s:
+    image: postgres
+    volumes:
+      - ./db_api/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment: *environment
+    ports:
+      - 2345:5432
+    networks:
+      app_net:
+        ipv4_address: 172.16.238.99
+
+  db_api_s:
+    build:
+      context: ./db_api
+    # image: db_api
+    ports:
+      - 5000:5000
+    environment:
+      <<: *environment
+      DB_HOST: 172.16.238.99
+      DB_PORT: 5432
+    networks:
+      app_net:
+        ipv4_address: 172.16.238.10
+
+
+  vote_api_s:
+    build:
+      context: ./vote_api
+    # image: vote_api
+    ports:
+      - 7000:7000
+    networks:
+      app_net:
+        ipv4_address: 172.16.238.20
+
+
+  results_api_s:
+    build:
+      context: ./results_api
+    # image: results_api
+    ports:
+      - 8000:8000
+    networks:
+      app_net:
+        ipv4_address: 172.16.238.30
+
+      
+networks:
+  app_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"
+

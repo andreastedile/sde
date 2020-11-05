@@ -1,0 +1,29 @@
+version: '3.8'
+
+x-environment:
+  &environment
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: password
+  POSTGRES_DB: dbvotes
+
+services:
+
+  db_service:
+    image: postgres
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment: *environment
+    # Also, expose postgres to host, for ease of access
+    expose:
+      - "5432"
+
+  db_api_service:
+    image: db_api.dev
+    ports:
+      - 5000:8080
+    environment:
+      <<: *environment
+      DB_HOST: db_service
+      DB_PORT: 5432
+    depends_on:
+      - db_service
