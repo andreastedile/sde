@@ -12,7 +12,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class NotFoundResourceExceptionResolver {
+public class ExceptionHandlerResolver {
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<?> handleNotFoundResourceException() {
