@@ -23,8 +23,6 @@ public class DataSource {
     private HikariConfig config = new HikariConfig();
     private HikariDataSource ds;
 
-    static {
-    }
     @PostConstruct
     public void init() {
         System.out.println(dbURL+databaseUser+databasePassword);
