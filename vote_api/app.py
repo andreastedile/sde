@@ -23,7 +23,7 @@ def info():
 
     return make_response({
         'server hostname': gethostname(),
-        'server port': 8000,
+        'server port': 7000,
         'remote address': request.remote_addr
     })
 
