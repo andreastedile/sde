@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 public class ApiController {
     @Autowired
-    private ApiService resultService;
+    private ApiService apiService;
 
 
     @PostMapping(value = "/votes", produces = "application/json")
@@ -24,7 +24,7 @@ public class ApiController {
         JSONObject header;
         JSONObject response;
 
-        Boolean exists = resultService.exists(vote.getOption());
+        Boolean exists = apiService.exists(vote.getOption());
         if (exists == null) {
             header = new JSONObject()
                     .put("status", "error")
@@ -48,7 +48,7 @@ public class ApiController {
                     .body(response.toString());
         }
 
-        Boolean ok = resultService.addVote(vote.getOption());
+        Boolean ok = apiService.addVote(vote.getOption());
         if (ok == null) {
             header = new JSONObject()
                     .put("status", "error")
@@ -89,7 +89,7 @@ public class ApiController {
         JSONObject body;
         JSONObject response;
 
-        List<Result> listResult = resultService.getVotes();
+        List<Result> listResult = apiService.getVotes();
         if (listResult == null) {
             header = new JSONObject()
                     .put("status", "error")
@@ -122,7 +122,7 @@ public class ApiController {
         JSONObject header;
         JSONObject response;
 
-        Boolean exists = resultService.exists(vote.getOption());
+        Boolean exists = apiService.exists(vote.getOption());
         if (exists == null) {
             header = new JSONObject()
                     .put("status", "error")
@@ -146,7 +146,7 @@ public class ApiController {
                     .body(response.toString());
         }
 
-        Boolean ok = resultService.deleteVote(vote.getOption());
+        Boolean ok = apiService.deleteVote(vote.getOption());
         if (ok == null) {
             header = new JSONObject()
                     .put("status", "error")
