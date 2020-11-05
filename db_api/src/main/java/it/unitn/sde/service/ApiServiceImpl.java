@@ -18,6 +18,11 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
+    public Boolean deleteVote(String option) {
+        return apiRepo.deleteVote(option);
+    }
+
+    @Override
     public List<Result> getVotes() {
         return apiRepo.getVotes();
     }

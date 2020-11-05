@@ -33,6 +33,26 @@ public class ApiRepoImpl implements ApiRepo {
 
         return true;
     }
+    @Override
+    public Boolean deleteVote(String option) {
+        try(Connection connection = dataSource.getConnection();) {
+            
+            final String insert = "UPDATE optionvotes SET votes = votes - 1 WHERE option = ? and votes>0";
+            try (PreparedStatement statement = connection.prepareStatement(insert)) {
+                statement.setString(1, option);
+                if (statement.executeUpdate() > 1)
+                    return false;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                return null;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+        return true;
+    }
 
     @Override
     public List<Result> getVotes() {
