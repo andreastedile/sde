@@ -1,7 +1,7 @@
 # https://spring.io/guides/topicals/spring-boot-docker/
 # Multi-Sage Build
 
-FROM openjdk:8-jdk-alpine as build
+FROM openjdk:8-jdk-buster as build
 WORKDIR /workspace/app
 
 COPY mvnw .
@@ -12,7 +12,7 @@ COPY src src
 RUN ./mvnw install -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-FROM openjdk:8-jdk-alpine
+FROM openjdk:8-jdk-buster
 VOLUME /tmp
 ARG DEPENDENCY=/workspace/app/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
