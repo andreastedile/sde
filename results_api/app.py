@@ -15,9 +15,7 @@ def home():
 
     return render_template(
         'index.html',
-        hostname=gethostname(),
-        DB_PORT=DB_PORT,
-        DB_HOST=DB_HOST
+        hostname=gethostname()
     )
 
 
