@@ -27,7 +27,6 @@ services:
         ipv4_address: 172.16.238.10
     environment:
       DB_HOST: 172.16.238.99
-      DB_PORT: 5432
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -45,7 +44,6 @@ services:
         ipv4_address: 172.16.238.20
     environment:
       DB_HOST: 172.16.238.10
-      DB_PORT: 80
 
 
   resultsapi:
@@ -60,7 +58,6 @@ services:
         ipv4_address: 172.16.238.30
     environment:
       DB_HOST: 172.16.238.10
-      DB_PORT: 80
 
       
 networks:
@@ -69,4 +66,3 @@ networks:
       driver: default
       config:
         - subnet: "172.16.238.0/24"
-
