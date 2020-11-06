@@ -4,7 +4,6 @@ from flask import Flask, request, make_response, jsonify, render_template
 from requests import post, RequestException
 
 DB_HOST = environ.get('DB_HOST', '172.16.238.10')
-DB_PORT = environ.get('DB_PORT', '5000')
 
 app = Flask(__name__)
 
@@ -36,7 +35,7 @@ def votes():
 
     body = request.json
     try:
-        their_resp = post(f'http://{DB_HOST}:{DB_PORT}/votes', json=body)
+        their_resp = post(f'http://{DB_HOST}/votes', json=body)
         our_resp = make_response(their_resp.text, their_resp.status_code)
         print(f'POST to DB_API returned status {their_resp.status_code}')
     except RequestException as e:

@@ -21,7 +21,6 @@ services:
       - ${PORT__DB_API}:80
     environment:
       DB_HOST: db
-      DB_PORT: 5432
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -36,7 +35,6 @@ services:
       - ${PORT__VOTE_API}:80
     environment:
       DB_HOST: dbapi
-      DB_PORT: 80
 
 
   resultsapi:
@@ -48,5 +46,3 @@ services:
       - ${PORT__RESULTS_API}:80
     environment:
       DB_HOST: dbapi
-      DB_PORT: 80
-
