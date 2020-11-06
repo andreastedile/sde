@@ -9,6 +9,9 @@ services:
       - ./db_api/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - ${PORT__DB}:5432
+    networks:
+      app_net:
+        ipv4_address: 172.16.238.99
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -19,8 +22,11 @@ services:
       context: ./db_api
     ports:
       - ${PORT__DB_API}:80
+    networks:
+      app_net:
+        ipv4_address: 172.16.238.10
     environment:
-      DB_HOST: db
+      DB_HOST: 172.16.238.99
       DB_PORT: 5432
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
@@ -34,8 +40,11 @@ services:
       - ./vote_api:/app
     ports:
       - ${PORT__VOTE_API}:80
+    networks:
+      app_net:
+        ipv4_address: 172.16.238.20
     environment:
-      DB_HOST: dbapi
+      DB_HOST: 172.16.238.10
       DB_PORT: 80
 
 
@@ -46,7 +55,18 @@ services:
       - ./results_api:/app
     ports:
       - ${PORT__RESULTS_API}:80
+    networks:
+      app_net:
+        ipv4_address: 172.16.238.30
     environment:
-      DB_HOST: dbapi
+      DB_HOST: 172.16.238.10
       DB_PORT: 80
+
+      
+networks:
+  app_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"
 
