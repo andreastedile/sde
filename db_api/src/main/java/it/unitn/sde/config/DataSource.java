@@ -10,29 +10,33 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
 @Component
 public class DataSource {
 
     @Value("${DB_PASSWORD}")
-    private String databasePassword;
+    private String password;
     @Value("${DB_USER}")
-    private String databaseUser;
+    private String user;
     @Value("${DB_URL}")
-    private String dbURL;
+    private String jdbcUrl;
 
-    private HikariConfig config = new HikariConfig();
+    private HikariConfig config;
     private HikariDataSource ds;
 
     @PostConstruct
     public void init() {
-        System.out.println(dbURL+databaseUser+databasePassword);
-        config.setJdbcUrl(dbURL);
-        config.setUsername(databaseUser);
-        config.setPassword(databasePassword);
+        System.out.println("Connected to " + jdbcUrl + " as " + user);
+
+        config = new HikariConfig();
+        config.setJdbcUrl(jdbcUrl);
+        config.setUsername(user);
+        config.setPassword(password);
+
         ds = new HikariDataSource(config);
     }
-    private DataSource() {
 
+    private DataSource() {
     }
 
     public Connection getConnection() throws SQLException {
