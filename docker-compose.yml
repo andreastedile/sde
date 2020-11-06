@@ -22,7 +22,6 @@ services:
   db_api_s:
     build:
       context: ./db_api
-    # image: db_api
     ports:
       - 5000:5000
     environment:
@@ -37,7 +36,8 @@ services:
   vote_api_s:
     build:
       context: ./vote_api
-    # image: vote_api
+    volumes:
+      - ./vote_api:/app
     ports:
       - 7000:7000
     networks:
@@ -48,7 +48,8 @@ services:
   results_api_s:
     build:
       context: ./results_api
-    # image: results_api
+    volumes:
+      - ./results_api:/app
     ports:
       - 8000:8000
     networks:
