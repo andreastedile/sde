@@ -10,4 +10,4 @@ ADD . /app
 
 ENV FLASK_ENV=development
 
-CMD ["flask", "run", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["flask", "run", "--host", "0.0.0.0", "--port", "80"]
