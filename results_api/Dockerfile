@@ -10,4 +10,6 @@ ADD . /app
 
 ENV FLASK_ENV=development
 
+ENV PYTHONUNBUFFERED=1
+
 CMD ["flask", "run", "--host", "0.0.0.0", "--port", "80"]
