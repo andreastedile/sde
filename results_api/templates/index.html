@@ -72,7 +72,8 @@
             chart.update();
         } catch (err) {
             if (err.response) {
-                console.error(`Server replied with status ${err.response.status}: ${err.response.data}`);
+                console.error(`Server replied with status ${err.response.status}:\n
+                ${JSON.stringify(err.response.data, null, '\t')}`);
             } else if (err.request) {
                 console.error(('The request was made but no response was received'));
             } else {

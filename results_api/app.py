@@ -40,9 +40,9 @@ def results():
         their_resp = get(f'http://{DB_HOST}:{DB_PORT}/votes')
         our_resp = make_response(their_resp.text, their_resp.status_code)
         print('GET to DB_API ok')
-    except RequestException:
-        print('GET to DB_API exception')
-        json = jsonify({'header': {'status_code': 500, 'status': 'GET to DB_API exception'}})
+    except RequestException as e:
+        print('GET to DB_API exception', e)
+        json = jsonify({'header': {'status_code': 500, 'status': 'GET to DB_API exception', 'description': str(e)}})
         our_resp = make_response(json, 500)
 
     our_resp.mimetype = 'application/json'

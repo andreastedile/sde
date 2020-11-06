@@ -39,9 +39,9 @@ def votes():
         their_resp = post(f'http://{DB_HOST}:{DB_PORT}/votes', json=body)
         our_resp = make_response(their_resp.text, their_resp.status_code)
         print('POST to DB_API ok')
-    except RequestException:
-        print('POST to DB_API exception')
-        json = jsonify({'header': {'status_code': 500, 'status': 'POST to DB_API exception'}})
+    except RequestException as e:
+        print('POST to DB_API exception', e)
+        json = jsonify({'header': {'status_code': 500, 'status': 'POST to DB_API exception', 'description': str(e)}})
         our_resp = make_response(json, 200)
 
     our_resp.mimetype = 'application/json'
