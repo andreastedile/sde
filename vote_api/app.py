@@ -42,7 +42,7 @@ def votes():
     except RequestException as e:
         print('POST to DB_API exception', e)
         json = jsonify({'header': {'status_code': 500, 'status': 'POST to DB_API exception', 'description': str(e)}})
-        our_resp = make_response(json, 200)
+        our_resp = make_response(json, 500)
 
     our_resp.mimetype = 'application/json'
     return our_resp
