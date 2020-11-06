@@ -39,7 +39,7 @@ def results():
     try:
         their_resp = get(f'http://{DB_HOST}:{DB_PORT}/votes')
         our_resp = make_response(their_resp.text, their_resp.status_code)
-        print('GET to DB_API ok')
+        print(f'GET to DB_API returned status {their_resp.status_code}')
     except RequestException as e:
         print('GET to DB_API exception', e)
         json = jsonify({'header': {'status_code': 500, 'status': 'GET to DB_API exception', 'description': str(e)}})
