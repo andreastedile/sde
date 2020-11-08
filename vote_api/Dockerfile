@@ -12,4 +12,6 @@ ENV FLASK_ENV=development
 
 ENV PYTHONUNBUFFERED=1
 
+EXPOSE 80
+
 CMD ["flask", "run", "--host", "0.0.0.0", "--port", "80"]
